@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title #{pageTitle}
+        link(rel="stylesheet", href="/styles/bootstrap.min.css")
+        link(rel="stylesheet", href="/styles/main.css")
+        script(src="scripts/jquery-3.4.1.min.js")
+    body
+        div.container
+            .row
+                nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.col-lg-12
+                    a.navbar-brand(href="/") Gem Store
+                    ul.navbar-nav.mr-auto
+                        if isAuthenticated && isAdmin
+                            li.nav-item
+                                a.nav-link(href="/dashboard") Dashboard
+                        li.nav-item
+                            a.nav-link Catalog
+                        li.nav-item
+                            a.nav-link About
+                        li.nav-item
+                            a.nav-link Contact Us
+                    ul.navbar-nav
+                        if isAuthenticated
+                            li.nav-item
+                                form(action="/logout", method="POST")
+                                    button(type="submit").btn.btn-primary Logout
+                        else
+                            li.nav-item
+                                a.nav-link(href="/sign-up") Sign Up
+                            li.nav-item
+                                a.nav-link(href="/login") Login
+                block content

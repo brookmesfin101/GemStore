@@ -1,0 +1,12 @@
+.row.mt-3
+    each gem in gems
+        .col-lg-4
+            .card.border-info.mb-3
+                input(type="hidden" name="gemID" value=gem.id)
+                .card-header #{gem.name}
+                .card-body
+                    img(style="width: 200px; height: 200px", src= gem.imageUrl)
+                    h4.card-title #{gem.price}
+                    p.card-text #{gem.description}
+                .card-footer.text-right
+                    button.btn.btn-info.btn-sm(onClick="getEditPage(event)") Edit

@@ -1,0 +1,23 @@
+extends layouts/layout.pug
+
+block content
+    div.mt-5.row
+        form(action="/sign-up", method="POST").col-sm-8.offset-sm-2
+            .form-group.row
+                label(for="firstName").col-sm-2.col-form-label First Name
+                input(type="text", name="firstName").form-control.col-sm-10#signUpFirstName
+            .form-group.row
+                label(for="lastName").col-sm-2.col-form-label Last Name
+                input(type="text", name="lastName").form-control.col-sm-10#signUpLastName   
+            .form-group.row
+                label(for="email").col-sm-2.col-form-label Email
+                input(type="email", name="email").form-control.col-sm-10#signUpEmail
+            .form-group.row
+                label(for="password").col-sm-2.col-form-label Password
+                input(type="password", name="password").form-control.col-sm-10#signUpPassword
+            .form-group.row
+                label(for="confirmPassword").col-sm-2.col-form-label Confirm Password
+                input(type="password", name="confirmPassword").form-control.col-sm-10#signUpConfirmPassword
+            .form-group.text-center
+                button(type="submit").btn.btn-outline-primary Sign Up
+        

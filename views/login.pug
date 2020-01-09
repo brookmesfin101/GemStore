@@ -1,0 +1,13 @@
+extends layouts/layout.pug
+
+block content
+    div.mt-5.col-lg-8.offset-lg-2
+        form(action="/login", method="POST")
+            .form-group.row
+                label(for="email").col-sm-2.col-form-label Email
+                input(type="email", name="email").form-control.col-sm-10#LogInEmail
+            .form-group.row
+                label(for="password").col-sm-2.col-form-label Password
+                input(type="password", name="password").form-control.col-sm-10#LogInPassword
+            .form-group.text-center
+                button(type="submit").btn.btn-outline-primary Log In

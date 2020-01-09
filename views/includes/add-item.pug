@@ -1,0 +1,22 @@
+form#AddItemForm.mt-5
+    fieldset
+        legend.text-center.text-secondary Add Gem
+        .form-group.row
+            label(for="Name").col-sm-3.col-form-label Name
+            .col-sm-9
+                input(type="text", name="Name").form-control
+        .form-group.row
+            label(for="Price").col-sm-3.col-form-label Price
+            .col-sm-9
+                input(type="number", name="Price").form-control
+        .form-group.row
+            label(for="Description").col-sm-3.col-form-label Description
+            .col-sm-9
+                input(type="text", name="Description").form-control
+        .form-group.row
+            label(for="ImageURL").col-sm-3.col-form-label Image URL
+            .col-sm-9
+                input(type="text", name="ImageURL").form-control
+        .form-group.row.justify-content-center.text-center.mt-4
+            .col-sm-3
+                button(type="button").btn.btn-info#AddItem Add To Catalog

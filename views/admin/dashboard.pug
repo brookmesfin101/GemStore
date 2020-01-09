@@ -1,0 +1,24 @@
+extends ../layouts/layout.pug
+
+block content
+    .container.p-0
+        .row
+            .col-3
+                .admin-user.row.no-gutters.mt-3
+                    .col-4.text-left
+                        img(src="images/user-icon.png").img-thumbnail.user-icon.d-inline
+                    .col-8
+                        h5.text-info.mb-0.mt-4 Brook Mesfin
+                        p Admin
+                .list-group.mt-3
+                    button(type="button").btn.btn-secondary.text-left#Dashboard
+                        span(style="font-size: 18px") Dashboard
+                    button(type="button").btn.btn-secondary.text-left#GetAddItem Add Item
+                    button(type="button").btn.btn-secondary.text-left#ViewCatalog View Catalog
+            .col-9#Dashboard-Main
+                include dashboard-home.pug
+
+    script(src="/scripts/dashboard.js")
+                
+                    
+                

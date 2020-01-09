@@ -1,0 +1,10 @@
+extends layouts/layout.pug
+
+block content
+    .col-lg-8.offset-lg-2.text-center
+        img(style="width: 400px; height: 400px", src= gem.imageUrl)
+        h1 #{gem.name}
+        h4 #{gem.price}
+        p.lead #{gem.description}
+        if isAuthenticated
+            button.btn.btn-info Add to Cart        
