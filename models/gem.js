@@ -1,7 +1,7 @@
 const DataTypes = require('sequelize').DataTypes;
 const sequelize = require('../util/database');
 
-var Gem = sequelize.define("Gem", {
+const Gem = sequelize.define("gem", {
     name: {
         type: DataTypes.STRING,
         allowNull: false,

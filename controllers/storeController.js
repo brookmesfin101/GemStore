@@ -35,6 +35,12 @@ exports.getDashboard = (req, res, next) => {
     })
 }
 
+exports.postAddToCart = (req, res, next) => {
+    
+}
+
+// Login and Sign up
+
 exports.getLogin = (req, res, next) => {
     res.render('login', {
         pageTitle: "Log In"
@@ -94,7 +100,7 @@ exports.postSignUp = (req, res, next) => {
         })
         .then(user => {
             console.log("<-- " + user.name + " created! -->");
-            res.redirect('/login-in');
+            res.redirect('/login');
         })
         .catch(err => {
             console.log(err);

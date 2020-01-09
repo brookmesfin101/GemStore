@@ -6,6 +6,9 @@ const session = require('express-session');
 
 const sequelize = require('./util/database');
 const Gem = require('./models/gem');
+const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cartItem');
 
 const app = express();
 
@@ -39,8 +42,13 @@ app.set('views', 'views');
 app.use(storeRoutes);
 app.use("/admin", adminRoutes);
 
+User.hasOne(Cart);
+Cart.belongsToMany(Gem, { through: CartItem});
+Gem.belongsToMany(Cart, { through: CartItem});
+
 sequelize
-    .sync()
+    .sync({force: true})
+    // .sync()
     .then(result => {
         app.listen(3000);
     })
