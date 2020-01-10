@@ -5,11 +5,12 @@ block content
                 .card.border-secondary.mb-3
                     .card-header #{gem.name}
                     .card-body
+                        input(type="hidden", value=gem.id)
                         img(style="width: 200px; height: 200px", src= gem.imageUrl)
                         h4.card-title $#{gem.price}
                         p.card-text #{gem.description}
                     .card-footer.text-right
                         form(action="/details/" + gem.id, method="GET")
                             button.btn.btn-info.btn-sm.mr-5 Details
-                            if isAuthenticated
+                            if isAuthenticated                                
                                 button.btn.btn-success.btn-sm Add to Cart

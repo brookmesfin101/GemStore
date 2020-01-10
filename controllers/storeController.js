@@ -35,12 +35,6 @@ exports.getDashboard = (req, res, next) => {
     })
 }
 
-exports.postAddToCart = (req, res, next) => {
-    
-}
-
-// Login and Sign up
-
 exports.getLogin = (req, res, next) => {
     res.render('login', {
         pageTitle: "Log In"
@@ -79,6 +73,14 @@ exports.getSignUp = (req, res, next) => {
         pageTitle: "Sign Up"
     });
 };
+
+exports.postAddToCart = (req, res, next) => {
+    const gemID = req.body.id;
+    let fetchedCart;
+    let newQuantity = 1;
+
+    console.log(req.session.user);
+}
 
 exports.postSignUp = (req, res, next) => {
     const name = req.body.firstName + " " + req.body.lastName;
