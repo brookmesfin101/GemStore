@@ -8,6 +8,8 @@ router.get('/', storeController.getIndex);
 
 router.get('/details/:gemId', storeController.getDetails);
 
+router.post('/addToCart', storeController.postAddToCart);
+
 router.get('/dashboard', storeController.getDashboard);
 
 router.get('/login', storeController.getLogin);

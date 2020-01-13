@@ -8,6 +8,7 @@ html(lang="en")
         link(rel="stylesheet", href="/styles/bootstrap.min.css")
         link(rel="stylesheet", href="/styles/main.css")
         script(src="scripts/jquery-3.4.1.min.js")
+        script(src="https://kit.fontawesome.com/4bb07c6c17.js", crossorigin="anonymous")
     body
         div.container
             .row
@@ -28,6 +29,10 @@ html(lang="en")
                             li.nav-item
                                 form(action="/logout", method="POST")
                                     button(type="submit").btn.btn-primary Logout
+                            li.nav-item.d-block.align-self-center
+                                i.fas.fa-shopping-cart.fa-2x
+                                .shopping-cart-count__container
+                                    p.shopping-cart-count__text.text-center #{cartCount}
                         else
                             li.nav-item
                                 a.nav-link(href="/sign-up") Sign Up

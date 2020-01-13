@@ -7,3 +7,16 @@
 .button-cursor{
     cursor: pointer;
 }
+
+.shopping-cart-count__container {
+    position: absolute;
+    top: 36px;
+    left: 1073px;
+}
+
+.shopping-cart-count__text {
+    color: white;
+    font-size: 10px;
+    font-family: sans-serif;
+    margin-bottom: 0;
+}

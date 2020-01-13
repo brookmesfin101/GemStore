@@ -47,8 +47,8 @@ Cart.belongsToMany(Gem, { through: CartItem});
 Gem.belongsToMany(Cart, { through: CartItem});
 
 sequelize
-    .sync({force: true})
-    // .sync()
+    // .sync({force: true})
+    .sync()
     .then(result => {
         app.listen(3000);
     })

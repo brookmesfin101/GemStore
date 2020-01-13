@@ -1,12 +1,32 @@
 const User = require('../models/user');
 const Gem = require('../models/gem');
 
+const Util = require('../util/util');
+
 exports.getIndex = (req, res, next) => {  
     Gem.findAll()
         .then(gems => {
+            let cartCount;
+            if(req && req.session && req.session.user){
+                // console.log(Util.getTotalCartCount(req.session.user.id));
+                var getTotalCartCount = Util.getTotalCartCount(req.session.user.id);
+                console.log(3);
+                console.log(getTotalCartCount);
+                console.log(4);
+                getTotalCartCount
+                    .then(count => {
+                        cartCount = count;
+                    })
+                    .err(err => {
+                        console.log("in error");
+                        console.log(err);
+                    })                
+            }
+
             res.render('index', {
                 pageTitle: "Gem Store",
-                gems: gems
+                gems: gems,
+                cartCount: cartCount
             });
         })
         .catch(err => {
@@ -75,11 +95,57 @@ exports.getSignUp = (req, res, next) => {
 };
 
 exports.postAddToCart = (req, res, next) => {
-    const gemID = req.body.id;
+    const gemId = req.body.gemId;
     let fetchedCart;
     let newQuantity = 1;
 
-    console.log(req.session.user);
+    // console.log(req.session.user);
+    // console.log(gemId);
+
+    User.findByPk(req.session.user.id)
+        .then(user => {
+            return user.getCart()
+                .then(cart => {
+                    if(!cart){
+                        user.createCart();
+                    }                                    
+                    return cart;
+                })
+                .catch(err => {
+                    console.log(err);
+                })            
+        })
+        .then(cart => {    
+            fetchedCart = cart;
+            
+            return cart.getGems({where: {id: gemId}})
+                .then(gems => {
+                    let gem;
+                    if(gems.length > 0){
+                        gem = gems[0];
+                    }
+                    if(gem){
+                        const oldQuantity = gem.cartItem.quantity;
+                        newQuantity = oldQuantity + 1;
+                        return gem;                        
+                    }
+                    return Gem.findByPk(gemId);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        })
+        .then(gem => {
+            return fetchedCart.addGem(gem, {
+                through: {quantity: newQuantity}
+            })            
+        })
+        .then(() => {
+            res.redirect('/');
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }
 
 exports.postSignUp = (req, res, next) => {
