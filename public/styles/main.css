@@ -8,6 +8,14 @@
     cursor: pointer;
 }
 
+.shopping-cart__link{
+    color: white;
+}
+
+.shopping-cart__link:hover{
+    color: rgb(177, 177, 177);
+}
+
 .shopping-cart-count__container {
     position: absolute;
     top: 36px;
@@ -15,8 +23,12 @@
 }
 
 .shopping-cart-count__text {
-    color: white;
-    font-size: 10px;
+    color: black;
+    font-size: 11px;
     font-family: sans-serif;
     margin-bottom: 0;
+}
+
+.shopping-cart-count__text--padding{
+    padding-left: 4px;
 }

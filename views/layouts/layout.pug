@@ -30,9 +30,14 @@ html(lang="en")
                                 form(action="/logout", method="POST")
                                     button(type="submit").btn.btn-primary Logout
                             li.nav-item.d-block.align-self-center
-                                i.fas.fa-shopping-cart.fa-2x
-                                .shopping-cart-count__container
-                                    p.shopping-cart-count__text.text-center #{cartCount}
+                                a(href="/cart").shopping-cart__link
+                                    i.fas.fa-shopping-cart.fa-2x
+                                    .shopping-cart-count__container
+                                        if cartCount > 9
+                                            p.shopping-cart-count__text.text-center #{cartCount}
+                                        else 
+                                            p.shopping-cart-count__text.shopping-cart-count__text--padding.text-center #{cartCount}
+                                    
                         else
                             li.nav-item
                                 a.nav-link(href="/sign-up") Sign Up

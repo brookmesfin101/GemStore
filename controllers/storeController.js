@@ -6,28 +6,24 @@ const Util = require('../util/util');
 exports.getIndex = (req, res, next) => {  
     Gem.findAll()
         .then(gems => {
-            let cartCount;
-            if(req && req.session && req.session.user){
-                // console.log(Util.getTotalCartCount(req.session.user.id));
-                var getTotalCartCount = Util.getTotalCartCount(req.session.user.id);
-                console.log(3);
-                console.log(getTotalCartCount);
-                console.log(4);
-                getTotalCartCount
-                    .then(count => {
-                        cartCount = count;
+            if(req && req.session && req.session.user){                
+                Util.getTotalCartCount(req.session.user.id)
+                    .then(cartCount => {                                              
+                        res.render('index', {
+                            pageTitle: "Gem Store",
+                            gems: gems,
+                            cartCount: cartCount
+                        });
                     })
-                    .err(err => {
-                        console.log("in error");
+                    .catch(err => {                        
                         console.log(err);
-                    })                
+                    })                                                                     
+            } else {
+                res.render('index', {
+                    pageTitle: "Gem Store",
+                    gems: gems                    
+                });
             }
-
-            res.render('index', {
-                pageTitle: "Gem Store",
-                gems: gems,
-                cartCount: cartCount
-            });
         })
         .catch(err => {
             console.log(err);
@@ -47,6 +43,12 @@ exports.getDetails = (req, res, next) => {
         .catch(err => {
             console.log(err);
         })
+}
+
+exports.getCart = (req, res, next) => {
+    res.render('cart', {
+        
+    })
 }
 
 exports.getDashboard = (req, res, next) => {

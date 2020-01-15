@@ -19,9 +19,7 @@ exports.getTotalCartCount = (userId) => {
             gems.forEach(g => {
                 cartCount += parseInt(g.cartItem.quantity);
             })
-            return new Promise(function(resolve, reject){
-                resolve(cartCount);
-            });
+            return cartCount;
         })
         .catch(err => {
             console.log(err);
