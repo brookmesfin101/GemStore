@@ -1,5 +1,24 @@
 extends layouts/layout.pug
 
 block content
-    
-
+    h2.mt-5.ml-5 You have #{cartCount} items in your shopping cart
+    .bg-secondary.col-lg-10.offset-lg-1     
+        each gem in gems   
+            .card.col-lg-12
+                .row.no-gutters
+                    .col-lg-2
+                        img(src=gem.imageUrl).shopping-cart-item__image
+                    .col-lg-6.text-center
+                        h3.text-info.mt-4.lead #{gem.name}
+                        p.text-secondary.mt-4 #{gem.description}
+                    .col-lg-4.text-center
+                        p.text-secondary.mt-4 Quantity Selected
+                        select(name="gemQuantity")
+                            option(value="1", selected = gem.cartItem.Quantity == 1 ) 1
+                            option(value="2", selected = gem.cartItem.Quantity == 2 ) 2
+                            option(value="3", selected = gem.cartItem.Quantity == 3 ) 3
+                            option(value="4", selected = gem.cartItem.Quantity == 4 ) 4
+                            option(value="5", selected = gem.cartItem.Quantity == 5 ) 5
+                            option(value="6", selected = gem.cartItem.Quantity == 6 ) 6
+                            option(value="7", selected = gem.cartItem.Quantity == 7 ) 7
+                     

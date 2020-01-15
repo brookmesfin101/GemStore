@@ -12,6 +12,8 @@ router.post('/addToCart', storeController.postAddToCart);
 
 router.get('/dashboard', storeController.getDashboard);
 
+router.get('/cart', storeController.getCart);
+
 router.get('/login', storeController.getLogin);
 
 router.post('/login', storeController.postLogin);

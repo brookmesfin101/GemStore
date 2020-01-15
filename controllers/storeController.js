@@ -46,9 +46,39 @@ exports.getDetails = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    res.render('cart', {
+    
+    if(req.session && req.session.user){
+        User.findByPk(req.session.user.id)
+            .then(user => {
+                return user.getCart();
+            })
+            .then(cart => {
+                if(cart){
+                    return cart.getGems();
+                } else {
+                    // TODO: Send Empty Shopping Cart flag
+                }
+            })
+            .then(gems => {
+                Util.getTotalCartCount(req.session.user.id)
+                    .then(cartCount => {                
+                        res.render('cart', {
+                            pageTitle: 'Shopping Cart',
+                            cartCount: cartCount,
+                            gems: gems
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })                 
+            })
+            .catch(err => {
+                console.log(err);
+            })
         
-    })
+    } else {
+        res.redirect('/');
+    }       
 }
 
 exports.getDashboard = (req, res, next) => {
@@ -100,9 +130,6 @@ exports.postAddToCart = (req, res, next) => {
     const gemId = req.body.gemId;
     let fetchedCart;
     let newQuantity = 1;
-
-    // console.log(req.session.user);
-    // console.log(gemId);
 
     User.findByPk(req.session.user.id)
         .then(user => {

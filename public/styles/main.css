@@ -32,3 +32,8 @@
 .shopping-cart-count__text--padding{
     padding-left: 4px;
 }
+
+.shopping-cart-item__image{
+    width: 150px;
+    height: 125px;
+}

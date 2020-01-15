@@ -3,7 +3,6 @@ const Cart = require('../models/cart');
 
 exports.getTotalCartCount = (userId) => {
     let cartCount = 0;
-    console.log(1);
     return User.findByPk(userId)
         .then(user => {            
             return user.getCart();
@@ -14,8 +13,7 @@ exports.getTotalCartCount = (userId) => {
             }
             return;             
         })
-        .then(gems => {  
-            console.log(2);          
+        .then(gems => {          
             gems.forEach(g => {
                 cartCount += parseInt(g.cartItem.quantity);
             })
