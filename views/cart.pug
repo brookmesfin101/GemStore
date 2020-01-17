@@ -3,7 +3,13 @@ extends layouts/layout.pug
 block content
     script(src="scripts/cart.js")
     h2.mt-5.ml-5 You have #{cartCount} items in your shopping cart
-    .bg-secondary.col-lg-10.offset-lg-1     
+    input(type="hidden", id="cartUpdated", name="cartUpdated", value="false")    
+    .bg-secondary.col-lg-10.offset-lg-1    
+        .card.border-success.col-lg-12.d-none#CartUpdatedNotification
+            .card-body.text-center
+                p.card-title.text-muted Changes Have Been Made to Your Cart
+                button.btn.btn-outline-success.btn-sm Update Cart
+
         each gem in gems   
             .card.col-lg-12
                 .row.no-gutters
@@ -15,6 +21,7 @@ block content
                         p.text-secondary.mt-3 #{gem.description}                        
                     .col-lg-2.text-center
                         p.text-secondary.mt-4 Quantity Selected
+                        input(type="hidden", name=gem.name + "-PerPrice", value=gem.price)
                         select(name=gem.name + "-gemQuantity").form-control-sm
                             option(value="1", selected = gem.cartItem.quantity == 1 ) 1
                             option(value="2", selected = gem.cartItem.quantity == 2 ) 2
@@ -25,5 +32,5 @@ block content
                             option(value="7", selected = gem.cartItem.quantity == 7 ) 7
                     .col-lg-3.text-center
                         p.text-secondary.mt-4 Total Price          
-                        h3.text-info.mt-2.lead #{gem.price * gem.cartItem.quantity}          
+                        h3.text-info.mt-2.lead(class=gem.name + "-TotalPrice") #{gem.price * gem.cartItem.quantity}          
                      
