@@ -126,6 +126,26 @@ exports.getSignUp = (req, res, next) => {
     });
 };
 
+exports.postUpdateCart = (req, res, next) => {
+    if(req.session && req.session.user){
+        User.findByPk(req.session.user.id)
+            .then(user => {
+                return user.getCart();
+            })
+            .then(cart => {
+                if(!cart){
+                    user.createCart();
+                }
+                return cart;
+            })
+            .then(cart => {
+                
+                cart.getGems({where: {}})
+            })
+    }
+    
+};
+
 exports.postAddToCart = (req, res, next) => {
     const gemId = req.body.gemId;
     let fetchedCart;

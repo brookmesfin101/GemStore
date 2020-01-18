@@ -7,8 +7,8 @@ block content
     .bg-secondary.col-lg-10.offset-lg-1    
         .card.border-success.col-lg-12.d-none#CartUpdatedNotification
             .card-body.text-center
-                p.card-title.text-muted Changes Have Been Made to Your Cart
-                button.btn.btn-outline-success.btn-sm Update Cart
+                p.card-title.text-muted Changes Have Been Made to Your Cart                
+                button(type="button").btn.btn-outline-success.btn-sm#UpdateCart Update Cart
 
         each gem in gems   
             .card.col-lg-12
@@ -22,6 +22,8 @@ block content
                     .col-lg-2.text-center
                         p.text-secondary.mt-4 Quantity Selected
                         input(type="hidden", name=gem.name + "-PerPrice", value=gem.price)
+                        input(type="hidden", name="id", value=gem.id)
+                        input(type="hidden", name=gem.id, value=gem.name)
                         select(name=gem.name + "-gemQuantity").form-control-sm
                             option(value="1", selected = gem.cartItem.quantity == 1 ) 1
                             option(value="2", selected = gem.cartItem.quantity == 2 ) 2

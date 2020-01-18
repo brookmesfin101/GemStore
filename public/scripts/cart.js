@@ -9,13 +9,38 @@ $(document).ready(function(){
             var price = $(`input[name='${name}-PerPrice'][type='hidden']`).val();
 
             $("." + name + "-TotalPrice").text((price * quantity).toFixed(2));
-            if($("input[name='cartUpdated").val() === "false"){
-                $("input[name='cartUpdated").val("true").change();
+            
+            if($("#CartUpdatedNotification").hasClass("d-none")){
+                $("#CartUpdatedNotification").removeClass("d-none");
             }
         })        
     });
+     
+    $("#UpdateCart").on("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        var formData = [];
         
-    $("input[name='cartUpdated").change((e) => {
-        $("#CartUpdatedNotification").toggle(".d-none");
+        $("input[name=id][type='hidden']").each((i, v) => {
+            // ids.push($(v).val());
+            var id = $(v).val();
+            var name = $(`input[name=${id}]`).val();
+            var gemQuantity = $(`select[name='${name}-gemQuantity']`).children("option:selected").val();
+            formData.push({id: id, name: name, gemQuantity: gemQuantity});
+        });        
+                
+        $.ajax({
+            url: "/update-cart",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            cache: false
+        }).done( function(result){
+            if(!$("#CartUpdatedNotification").hasClass("d-none")){
+                $("#CartUpdatedNotification").addClass("d-none");
+            }
+        })
     })
+    
 });

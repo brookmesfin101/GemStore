@@ -14,6 +14,8 @@ router.get('/dashboard', storeController.getDashboard);
 
 router.get('/cart', storeController.getCart);
 
+router.post('/update-cart', storeController.postUpdateCart);
+
 router.get('/login', storeController.getLogin);
 
 router.post('/login', storeController.postLogin);
