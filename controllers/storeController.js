@@ -127,6 +127,7 @@ exports.getSignUp = (req, res, next) => {
 };
 
 exports.postUpdateCart = (req, res, next) => {
+    console.log(req.body);
     if(req.session && req.session.user){
         User.findByPk(req.session.user.id)
             .then(user => {
@@ -139,8 +140,18 @@ exports.postUpdateCart = (req, res, next) => {
                 return cart;
             })
             .then(cart => {
-                
-                cart.getGems({where: {}})
+                // console.log(cart);
+                console.log(cart.__proto__);
+                for (let i = 0; i < req.body.length; i++){
+                    cart.getGems({where: {id: req.body[i].id}})
+                        .then(gems => {
+                            var gem = gems[0];
+                            // console.log(gem.__proto__);
+                            
+                            gem.cartItem = { quantity: parseInt(req.body[i].gemQuantity)};
+                            // gem.cartItem.quantity = req.body[i].gemQuantity;                            
+                        })
+                }
             })
     }
     
