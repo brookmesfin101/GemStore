@@ -37,6 +37,7 @@ $(document).ready(function(){
             data: JSON.stringify(formData),
             cache: false
         }).done( function(result){
+            console.log(result);
             if(!$("#CartUpdatedNotification").hasClass("d-none")){
                 $("#CartUpdatedNotification").addClass("d-none");
             }

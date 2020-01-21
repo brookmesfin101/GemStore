@@ -126,33 +126,45 @@ exports.getSignUp = (req, res, next) => {
     });
 };
 
-exports.postUpdateCart = (req, res, next) => {
-    console.log(req.body);
+exports.postUpdateCart = (req, res, next) => {    
     if(req.session && req.session.user){
         User.findByPk(req.session.user.id)
             .then(user => {
+                console.log(1);
                 return user.getCart();
             })
             .then(cart => {
+                console.log(2);
                 if(!cart){
                     user.createCart();
                 }
                 return cart;
             })
             .then(cart => {
-                // console.log(cart);
-                console.log(cart.__proto__);
-                for (let i = 0; i < req.body.length; i++){
-                    cart.getGems({where: {id: req.body[i].id}})
-                        .then(gems => {
-                            var gem = gems[0];
-                            // console.log(gem.__proto__);
-                            
-                            gem.cartItem = { quantity: parseInt(req.body[i].gemQuantity)};
-                            // gem.cartItem.quantity = req.body[i].gemQuantity;                            
-                        })
-                }
+                console.log(3);
+                // console.log(cart.__proto__);
+                return cart.getGems({where: {id: req.body[0].id}})
+                    
+                // for (let i = 0; i < req.body.length; i++){
+                //     cart.getGems({where: {id: req.body[i].id}})
+                //         .then(gems => {
+                //             var gem = gems[0];                            
+                //             gem.cartItem = { quantity: parseInt(req.body[i].gemQuantity)};                            
+                //             gem.save();                                                        
+                //         })                                                
+                // }
             })
+            .then(gems => {
+                console.log(4);
+                gems[0].cartItem.quantity = parseInt(req.body[0].gemQuantity);
+                return gems[0].save();
+            })
+            .then(result => {
+                console.log(5);
+                console.log(result);
+                return "Cart Updated";
+            })
+            .catch(err => console.log(err));
     }
     
 };
