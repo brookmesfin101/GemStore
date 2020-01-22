@@ -16,7 +16,7 @@ $(document).ready(function(){
         })        
     });
      
-    $("#UpdateCart").on("click", function(e){
+    $("body").on("click", "#UpdateCart", function(e){
         e.preventDefault();
         e.stopPropagation();
 

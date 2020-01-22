@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Gem = require('../models/gem');
+const CartItem = require('../models/cartItem');
 
 const Util = require('../util/util');
 
@@ -130,40 +131,32 @@ exports.postUpdateCart = (req, res, next) => {
     if(req.session && req.session.user){
         User.findByPk(req.session.user.id)
             .then(user => {
-                console.log(1);
                 return user.getCart();
             })
             .then(cart => {
-                console.log(2);
                 if(!cart){
                     user.createCart();
                 }
                 return cart;
             })
             .then(cart => {
-                console.log(3);
-                // console.log(cart.__proto__);
-                return cart.getGems({where: {id: req.body[0].id}})
-                    
-                // for (let i = 0; i < req.body.length; i++){
-                //     cart.getGems({where: {id: req.body[i].id}})
-                //         .then(gems => {
-                //             var gem = gems[0];                            
-                //             gem.cartItem = { quantity: parseInt(req.body[i].gemQuantity)};                            
-                //             gem.save();                                                        
-                //         })                                                
-                // }
+                return CartItem.findAll({where: {cartId: cart.id}})
             })
-            .then(gems => {
-                console.log(4);
-                gems[0].cartItem.quantity = parseInt(req.body[0].gemQuantity);
-                return gems[0].save();
+            .then(cartItems => {
+                let promises = [];
+                for(let i = 0; i < req.body.length; i++){
+                    promises.push(CartItem.findOne({where: {gemId: req.body[i].id}}));                                                               
+                }  
+                return Promise.all(promises);                    
             })
-            .then(result => {
-                console.log(5);
-                console.log(result);
-                return "Cart Updated";
-            })
+            .then(cartItems => {
+                let promises = [];
+                for(let i = 0; i < cartItems.length; i++){
+                    for(let j = 0; j < req.body.length; j++){
+                        
+                    }
+                }
+            })            
             .catch(err => console.log(err));
     }
     
