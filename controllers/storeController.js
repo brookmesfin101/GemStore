@@ -127,7 +127,11 @@ exports.getSignUp = (req, res, next) => {
     });
 };
 
-exports.postUpdateCart = (req, res, next) => {    
+exports.postUpdateCart = (req, res, next) => {  
+    let fetchedCart;
+    let updatedGems = req.body;    
+    let deletePromises = [];
+    let addPromises = [];
     if(req.session && req.session.user){
         User.findByPk(req.session.user.id)
             .then(user => {
@@ -135,31 +139,39 @@ exports.postUpdateCart = (req, res, next) => {
             })
             .then(cart => {
                 if(!cart){
-                    user.createCart();
+                    return user.createCart();
                 }
                 return cart;
             })
             .then(cart => {
-                return CartItem.findAll({where: {cartId: cart.id}})
-            })
-            .then(cartItems => {
-                let promises = [];
-                for(let i = 0; i < req.body.length; i++){
-                    promises.push(CartItem.findOne({where: {gemId: req.body[i].id}}));                                                               
-                }  
-                return Promise.all(promises);                    
-            })
-            .then(cartItems => {
-                let promises = [];
-                for(let i = 0; i < cartItems.length; i++){
-                    for(let j = 0; j < req.body.length; j++){
-                        
-                    }
+                fetchedCart = cart;                
+                var promises = [];
+                for(var i = 0; i < updatedGems.length; i++){
+                    promises.push(Gem.findByPk(updatedGems[i].id));
                 }
+                return Promise.all(promises);
+            })     
+            .then(gems => {
+                var promises = [];           
+                for(var i = 0; i < gems.length; i++){
+                    var index = updatedGems.find(j => j.name === gems[i].name);
+                    
+                    deletePromises.push(fetchedCart.removeGem(gems[i]));
+                    addPromises.push(fetchedCart.addGem(gems[i], {through : {quantity: index.gemQuantity} }));
+                }                
+                return Promise.all(deletePromises);
+            })
+            .then(() => {
+                return Promise.all(addPromises);
             })            
+            .then(() => {                           
+                return Util.getTotalCartCount(req.session.user.id);
+            })   
+            .then(cartCount => {
+                res.status(200).send({cartCount});
+            })         
             .catch(err => console.log(err));
-    }
-    
+    }    
 };
 
 exports.postAddToCart = (req, res, next) => {

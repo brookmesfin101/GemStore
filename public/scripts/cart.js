@@ -41,6 +41,9 @@ $(document).ready(function(){
             if(!$("#CartUpdatedNotification").hasClass("d-none")){
                 $("#CartUpdatedNotification").addClass("d-none");
             }
+            if(result.cartCount){
+                
+            }
         })
     })
     
