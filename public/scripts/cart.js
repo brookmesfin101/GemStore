@@ -41,8 +41,15 @@ $(document).ready(function(){
             if(!$("#CartUpdatedNotification").hasClass("d-none")){
                 $("#CartUpdatedNotification").addClass("d-none");
             }
-            if(result.cartCount){
-                
+            if(result && result.cartCount){
+                var el = $(".shopping-cart-count__text");
+                if(el.hasClass("shopping-cart-count__text--padding") && result.cartCount > 9){
+                    el.removeClass("shopping-cart-count__text--padding");
+                }
+                if(!el.hasClass("shopping-cart-count__text--padding") && result.cartCount <= 9){
+                    el.addClass("shopping-cart-count__text--padding");
+                }
+                el.text(result.cartCount);
             }
         })
     })
