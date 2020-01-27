@@ -251,7 +251,14 @@ exports.postOrder = (req, res, next) => {
                         return gem;
                     })
                 );                
-            })    
+            })
+            .then(() => {
+                return fetchedCart.setGems(null);
+            })
+            .then(() => {
+                res.redirect('/');
+            })
+            .catch(err => console.log(err));
     }
 }
 

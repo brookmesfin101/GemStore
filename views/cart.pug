@@ -37,5 +37,6 @@ block content
                         h3.text-info.mt-2.lead(class=gem.name + "-TotalPrice") #{(gem.price * gem.cartItem.quantity).toFixed(2)}  
         .row.no-gutters
             .col-lg-12.text-center
-                button(type="button").btn.btn-outline-success.btn.mt-3#SubmitOrder Submit Order        
+                form(action="/post-order", method="POST")
+                    button(type="submit").btn.btn-outline-success.btn.mt-3 Submit Order        
                      

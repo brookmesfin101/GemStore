@@ -57,17 +57,17 @@ $(document).ready(function(){
         })
     })
 
-    $("body").on("click", "#SubmitOrder", function(e){
-        e.preventDefault();
-        e.stopPropagation();
+    // $("body").on("click", "#SubmitOrder", function(e){
+    //     e.preventDefault();
+    //     e.stopPropagation();
 
-        $.ajax({
-            url: "/post-order",
-            type: "POST",
-            contentType: "application/json",
-            cache: false
-        }).done(() => {
-            console.log("order posted");
-        })
-    });
+    //     $.ajax({
+    //         url: "/post-order",
+    //         type: "POST",
+    //         contentType: "application/json",
+    //         cache: false
+    //     }).done(result => {
+    //         console.log(result);
+    //     })
+    // });
 });
