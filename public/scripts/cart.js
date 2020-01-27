@@ -10,9 +10,12 @@ $(document).ready(function(){
 
             $("." + name + "-TotalPrice").text((price * quantity).toFixed(2));
             
-            if($("#CartUpdatedNotification").hasClass("d-none")){
-                $("#CartUpdatedNotification").removeClass("d-none");
-            }
+            // if($("#CartUpdatedNotification").hasClass("d-none")){
+            //     $("#CartUpdatedNotification").removeClass("d-none");
+            // }
+            if(!$("#CartUpdatedNotification").hasClass("show-notification")){
+                $("#CartUpdatedNotification").toggleClass("show-notification hide-notification");
+            }            
         })        
     });
      
@@ -36,11 +39,11 @@ $(document).ready(function(){
             contentType: "application/json",
             data: JSON.stringify(formData),
             cache: false
-        }).done( function(result){
-            console.log(result);
-            if(!$("#CartUpdatedNotification").hasClass("d-none")){
-                $("#CartUpdatedNotification").addClass("d-none");
-            }
+        }).done( function(result){            
+            // if(!$("#CartUpdatedNotification").hasClass("d-none")){
+            //     $("#CartUpdatedNotification").addClass("d-none");
+            // }
+            $("#CartUpdatedNotification").toggleClass("show-notification hide-notification");
             if(result && result.cartCount){
                 var el = $(".shopping-cart-count__text");
                 if(el.hasClass("shopping-cart-count__text--padding") && result.cartCount > 9){
@@ -53,5 +56,18 @@ $(document).ready(function(){
             }
         })
     })
-    
+
+    $("body").on("click", "#SubmitOrder", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        $.ajax({
+            url: "/post-order",
+            type: "POST",
+            contentType: "application/json",
+            cache: false
+        }).done(() => {
+            console.log("order posted");
+        })
+    });
 });

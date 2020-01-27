@@ -5,7 +5,7 @@ block content
     h2.mt-5.ml-5 You have #{cartCount} items in your shopping cart
     input(type="hidden", id="cartUpdated", name="cartUpdated", value="false")    
     .bg-secondary.col-lg-10.offset-lg-1    
-        .card.border-success.col-lg-12.d-none#CartUpdatedNotification
+        .card.border-success.col-lg-12.hide-notification#CartUpdatedNotification
             .card-body.text-center
                 p.card-title.text-muted Changes Have Been Made to Your Cart                
                 button(type="button").btn.btn-outline-success.btn-sm#UpdateCart Update Cart
@@ -33,6 +33,9 @@ block content
                             option(value="6", selected = gem.cartItem.quantity == 6 ) 6
                             option(value="7", selected = gem.cartItem.quantity == 7 ) 7
                     .col-lg-3.text-center
-                        p.text-secondary.mt-4 Total Price          
-                        h3.text-info.mt-2.lead(class=gem.name + "-TotalPrice") #{(gem.price * gem.cartItem.quantity).toFixed(2)}          
+                        p.text-secondary.mt-4 Total <span class="text-primary">#{gem.name}</span> Price          
+                        h3.text-info.mt-2.lead(class=gem.name + "-TotalPrice") #{(gem.price * gem.cartItem.quantity).toFixed(2)}  
+        .row.no-gutters
+            .col-lg-12.text-center
+                button(type="button").btn.btn-outline-success.btn.mt-3#SubmitOrder Submit Order        
                      

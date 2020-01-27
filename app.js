@@ -9,6 +9,8 @@ const Gem = require('./models/gem');
 const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cartItem');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 
 const app = express();
 
@@ -43,8 +45,11 @@ app.use(storeRoutes);
 app.use("/admin", adminRoutes);
 
 User.hasOne(Cart);
-Cart.belongsToMany(Gem, { through: CartItem});
-Gem.belongsToMany(Cart, { through: CartItem});
+User.hasMany(Order);
+Cart.belongsToMany(Gem, { through: CartItem });
+Gem.belongsToMany(Cart, { through: CartItem });
+Order.belongsTo(User);
+Order.belongsToMany(Gem, { through: OrderItem });
 
 sequelize
     // .sync({force: true})

@@ -37,3 +37,15 @@
     width: 150px;
     height: 125px;
 }
+
+.show-notification{
+    transition: opacity 200ms ease-in;
+    height: auto;
+    opacity: 1;
+}
+
+.hide-notification{
+    transition: opacity 200ms ease-out;
+    height: 0;
+    opacity: 0;
+}

@@ -129,8 +129,7 @@ exports.getSignUp = (req, res, next) => {
 
 exports.postUpdateCart = (req, res, next) => {  
     let fetchedCart;
-    let updatedGems = req.body;    
-    let deletePromises = [];
+    let updatedGems = req.body;        
     let addPromises = [];
     if(req.session && req.session.user){
         User.findByPk(req.session.user.id)
@@ -155,15 +154,11 @@ exports.postUpdateCart = (req, res, next) => {
                 var promises = [];           
                 for(var i = 0; i < gems.length; i++){
                     var index = updatedGems.find(j => j.name === gems[i].name);
-                    
-                    deletePromises.push(fetchedCart.removeGem(gems[i]));
+                                        
                     addPromises.push(fetchedCart.addGem(gems[i], {through : {quantity: index.gemQuantity} }));
                 }                
-                return Promise.all(deletePromises);
-            })
-            .then(() => {
                 return Promise.all(addPromises);
-            })            
+            })                       
             .then(() => {                           
                 return Util.getTotalCartCount(req.session.user.id);
             })   
@@ -223,6 +218,41 @@ exports.postAddToCart = (req, res, next) => {
         .catch(err => {
             console.log(err);
         })
+}
+
+exports.postOrder = (req, res, next) => {
+    let fetchedUser;
+    let fetchedCart;
+    let fetchedGems;
+    console.log(this);
+    
+    if(req.session && req.session.user && req.session.user.id){
+        User.findByPk(req.session.user.id)
+            .then(user => {
+                fetchedUser = user;
+                return user.getCart()
+            })   
+            .then(cart => {
+                if(cart == null){                    
+                    // TODO: Tell Customer Cart is Empty
+                } else {                    
+                    fetchedCart = cart;                    
+                    return cart.getGems();
+                }                
+            })   
+            .then(gems => {                
+                fetchedGems = gems;
+                return fetchedUser.createOrder();
+            })
+            .then(order => {
+                return order.addGems(
+                    fetchedGems.map(gem => {
+                        gem.orderItem = { quantity: gem.cartItem.quantity };
+                        return gem;
+                    })
+                );                
+            })    
+    }
 }
 
 exports.postSignUp = (req, res, next) => {
