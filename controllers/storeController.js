@@ -220,11 +220,36 @@ exports.postAddToCart = (req, res, next) => {
         })
 }
 
+exports.getOrders = (req, res, next) => {
+    let fetchedUser;
+    let fetchedOrders;
+
+    if(req.session && req.session.user && req.session.user.id){
+        User.findByPk(req.session.user.id)
+            .then(user => {
+                fetchedUser = user;                
+                return user.getOrders();
+            })
+            .then(orders => {
+                fetchedOrders = orders;
+
+                
+                // res.render('orders', {
+                //     pageTitle: "Orders",
+                //     orders: orders                    
+                // });
+            })
+            .then()
+            .catch(err => {
+                console.log(err);
+            })
+    }
+}
+
 exports.postOrder = (req, res, next) => {
     let fetchedUser;
     let fetchedCart;
-    let fetchedGems;
-    console.log(this);
+    let fetchedGems;    
     
     if(req.session && req.session.user && req.session.user.id){
         User.findByPk(req.session.user.id)
@@ -256,7 +281,7 @@ exports.postOrder = (req, res, next) => {
                 return fetchedCart.setGems(null);
             })
             .then(() => {
-                res.redirect('/');
+                res.redirect('/orders');
             })
             .catch(err => console.log(err));
     }

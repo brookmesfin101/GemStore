@@ -18,6 +18,8 @@ router.post('/update-cart', storeController.postUpdateCart);
 
 router.post('/post-order', storeController.postOrder);
 
+router.get('/orders', storeController.getOrders);
+
 router.get('/login', storeController.getLogin);
 
 router.post('/login', storeController.postLogin);
